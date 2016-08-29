@@ -18,7 +18,7 @@ func format(lvl, msg string) string {
 	if !timeOff {
 		now = time.Now().Format("01-02 15:04:05.000")
 	}
-	if !fileOff {
+	if !lineOff {
 		var ok bool
 		_, file, line, ok = runtime.Caller(callDepth)
 		if !ok {
@@ -35,7 +35,7 @@ func format(lvl, msg string) string {
 		} else {
 			lvl += " "
 		}
-		if fileOff {
+		if lineOff {
 			return fmt.Sprintf("%s%s%s", lvl, msg, nl)
 		}
 		return fmt.Sprintf("%s%s:%d %s%s", lvl, file, line, msg, nl)
@@ -43,12 +43,12 @@ func format(lvl, msg string) string {
 	if levelOff {
 		lvl = ""
 	} else {
-		lvl = " " + lvl + " "
+		lvl += " "
 	}
-	if fileOff {
-		return fmt.Sprintf("%s%s%s%s", now, lvl, msg, nl)
+	if lineOff {
+		return fmt.Sprintf("%s %s%s%s", now, lvl, msg, nl)
 	}
-	return fmt.Sprintf("%s%s%s:%d %s%s", now, lvl, file, line, msg, nl)
+	return fmt.Sprintf("%s %s%s:%d %s%s", now, lvl, file, line, msg, nl)
 }
 
 func write(p Priority, msg string) {

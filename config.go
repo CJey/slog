@@ -3,10 +3,11 @@ package slog
 import (
 	"io"
 	"os"
+	"strings"
 )
 
 var timeOff bool
-var fileOff bool
+var lineOff bool
 var levelOff bool
 var callDepth int
 
@@ -32,7 +33,7 @@ var codeRoot string
 
 func init() {
 	w = os.Stderr
-	priority = LOG_INFO
+	priority = LOG_NOTICE
 	callDepth = 3
 }
 
@@ -48,6 +49,28 @@ func SetPriority(p Priority) {
 		p = LOG_EMERG
 	}
 	priority = p
+}
+
+func SetPriorityString(p string) {
+	p = strings.ToUpper(p)
+	switch p {
+	case "EMERG":
+		priority = LOG_EMERG
+	case "ALERT":
+		priority = LOG_ALERT
+	case "CRIT":
+		priority = LOG_CRIT
+	case "ERR":
+		priority = LOG_ERR
+	case "WARNING":
+		priority = LOG_WARNING
+	case "NOTICE":
+		priority = LOG_NOTICE
+	case "INFO":
+		priority = LOG_INFO
+	case "DEBUG":
+		priority = LOG_DEBUG
+	}
 }
 
 func SetWriter(wt io.Writer) {
@@ -68,8 +91,8 @@ func SetTimeOff(off bool) {
 	timeOff = off
 }
 
-func SetFileOff(off bool) {
-	fileOff = off
+func SetLineOff(off bool) {
+	lineOff = off
 }
 
 func SetCallDepth(cd int) {
