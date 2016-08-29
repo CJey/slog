@@ -25,8 +25,8 @@ func format(lvl, msg string) string {
 			file = "???"
 			line = 0
 		}
-		if len(file) > len(_srcroot_) && file[:len(_srcroot_)] == _srcroot_ {
-			file = file[len(_srcroot_):]
+		if len(file) > len(codeRoot) && file[:len(codeRoot)] == codeRoot {
+			file = file[len(codeRoot):]
 		}
 	}
 	if timeOff {

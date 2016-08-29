@@ -28,12 +28,16 @@ var w io.Writer
 var sw Writer
 var priority Priority
 
-var _srcroot_ string
+var codeRoot string
 
 func init() {
 	w = os.Stderr
 	priority = LOG_INFO
 	callDepth = 3
+}
+
+func SetCodeRoot(root string) {
+	codeRoot = root
 }
 
 func SetPriority(p Priority) {
